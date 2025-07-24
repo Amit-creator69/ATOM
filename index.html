@@ -3,10 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href= "style.css">
-    <title>Document</title>
+    <title>AmitToon - Your Webcomic Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    WELCOME TO MY ATOM WORK
+    <header>
+        <div class="container">
+            <h1 class="site-logo">AmitToon</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Comics</a></li>
+                    <li><a href="index.html">Genres</a></li>
+                    <li><a href="index.html">Search</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar-container">
+                <input type="text" id="search-input" placeholder="Search comics by name or author...">
+                <button id="search-button">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="banner-section">
+            <div class="banner-slide">
+                <img src="images/f1.jpg" alt="New Comic Banner">
+                <div class="banner-text">
+                    <h2>Discover Your Next Favorite Comic!</h2>
+                    <p>Thousands of webcomics updated daily.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="genre-tags-section">
+            <h2>Explore by Genre</h2>
+            <div class="genre-tags">
+                <button class="genre-tag active" data-genre="all">All</button>
+                <button class="genre-tag" data-genre="fantasy">Fantasy</button>
+                <button class="genre-tag" data-genre="romance">Romance</button>
+                <button class="genre-tag" data-genre="action">Action</button>
+                <button class="genre-tag" data-genre="horror">Horror</button>
+                <button class="genre-tag" data-genre="comedy">Comedy</button>
+                <button class="genre-tag" data-genre="slice-of-life">Slice of Life</button>
+            </div>
+        </section>
+
+        <section class="featured-comics-section" id="homepage-section">
+            <h2>Featured Comics</h2>
+            <div class="comic-cards-grid" id="comic-grid">
+                </div>
+        </section>
+
+        <section id="comic-detail-page" class="hidden">
+            <a href="#" class="back-to-home-btn" id="back-to-home-from-detail">&larr; Back to Home</a>
+            <h2 id="detail-comic-title"></h2>
+            <p><strong>Author:</strong> <span id="detail-comic-author"></span></p>
+            <p id="detail-comic-description"></p>
+            <h3>Episodes</h3>
+            <ul id="detail-episode-list">
+                </ul>
+        </section>
+
+    </main>
+
+
+        <footer>
+    <div class="container">
+
+      
+      <div class="app-downloads">
+        <p>Download AmitToon now!</p>
+        <div class="app-buttons">
+          <a href="https://play.google.com/store" target="_blank" class="app-button google-play">
+            <i class="fab fa-google-play"></i> Google Play
+          </a>
+          <a href="https://www.apple.com/app-store/" target="_blank" class="app-button app-store">
+            <i class="fab fa-apple"></i> App Store
+          </a>
+        </div>
+      </div>
+
+      
+      <div class="social-icons">
+        <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://twitter.com/" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.whatsapp.com/" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://t.me/" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+      </div>
+
+      
+      <div class="footer-nav">
+        <a href="#">About</a>
+        <a href="#">Feedback</a>
+        <a href="#">Help</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Advertise</a>
+        <a href="#">Contact</a>
+      </div>
+
+     
+      <div class="footer-brand-info">
+        <span class="footer-logo-text">AMITTOON</span>
+        <span class="language-selector">ENG <i class="fas fa-caret-down"></i></span>
+      </div>
+
+      
+      <p class="copyright">
+        &copy; 2025 AmitToon. All rights reserved.
+      </p>
+
+    </div>
+  </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
