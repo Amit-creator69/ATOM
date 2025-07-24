@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Episode - AmitTool</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+        .episode-reader-container {
+            max-width: 600px; 
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .episode-reader-container h2 {
+            text-align: center;
+            padding: 15px;
+            background-color: #4a90e2;
+            color: white;
+            margin-bottom: 0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .episode-content {
+            flex-grow: 1; 
+            padding: 10px;
+            overflow-y: scroll;
+            max-height: calc(100vh - 200px); 
+            -webkit-overflow-scrolling: touch; 
+            scroll-behavior: smooth;
+        }
+
+        .episode-content img {
+            width: 100%;
+            display: block;
+            margin-bottom: 5px;
+            object-fit: contain; 
+            height: auto; 
+            max-width: 100%;
+        }
+
+        .episode-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #eee;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .episode-nav button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .episode-nav button:hover {
+            background-color: #333;
+        }
+
+        .episode-nav button:disabled {
+            background-color: #bbb;
+            cursor: not-allowed;
+        }
+        .back-to-comic-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .back-to-comic-btn:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 768px) {
+            .episode-reader-container {
+                margin: 40px auto;
+                max-width: 768px;  }
+            .episode-content {
+                max-height: calc(100vh - 250px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-logo">AmitTool</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Comics</a></li>
+                    <li><a href="index.html">Genres</a></li>
+                    <li><a href="index.html">Search</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="index.html" class="back-to-comic-btn" id="back-to-comic-detail">&larr; Back to Comic Details</a>
+        <div class="episode-reader-container">
+            <h2 id="episode-title">Loading Episode...</h2>
+            <div class="episode-content" id="episode-content">
+                </div>
+            <div class="episode-nav">
+                <button id="prev-episode-btn" disabled>Previous Episode</button>
+                <button id="next-episode-btn">Next Episode</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AmitTool. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+       
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const comicId = parseInt(urlParams.get('comicId'));
+            let episodeId = parseInt(urlParams.get('episodeId')); 
+            const comicsData = [
+                {
+                    id: 1,
+                    title: 'The Last Sorcerer',
+                    episodes: [
+                        { id: 1, title: 'The Awakening', imageUrls: ["images/f8.jpg"] },
+                        { id: 2, title: 'Echoes of the Past', imageUrls: ["images/f9.png"] },
+                        { id: 3, title: 'The Oracle\'s Prophecy', imageUrls: ["images/f7.jpg"] },
+                    ]
+                },
+                {
+                    id: 2,
+                    title: 'Love in the Stars',
+                    episodes: [
+                        { id: 1, title: 'First Contact', imageUrls: ["images/g1.jpeg"] },
+                        { id: 2, title: 'Across the Void', imageUrls: ["images/w1.webp"] },
+                    ]
+                },
+                {
+                    id: 3,
+                    title: 'Haunted Mansion Mystery',
+                    episodes: [
+                        { id: 1, title: 'The Dare', imageUrls: ["images/j1.jpg"] },
+                        { id: 2, title: 'Whispers in the Dark', imageUrls: ["images/j2.jpg"] },
+                        { id: 3, title: 'The Forgotten Room', imageUrls: ["images/j3.jpeg"] },
+                        { id: 4, title: 'The True Horrors', imageUrls: ["images/j4.jpg"] },
+                    ]
+                },
+                {
+                    id: 4,
+                    title: 'Urban Chronicles',
+                    episodes: [
+                        { id: 1, title: 'Coffee Shop Chaos', imageUrls: ["images/w2.webp"] },
+                        { id: 2, title: 'Lost in Translation', imageUrls: ["images/j5.jpg"] },
+                    ]
+                }
+            ];
+
+            const currentComic = comicsData.find(c => c.id === comicId);
+            let currentEpisodeIndex = currentComic ? currentComic.episodes.findIndex(e => e.id === episodeId) : -1;
+
+            const episodeTitleElem = document.getElementById('episode-title');
+            const episodeContentElem = document.getElementById('episode-content');
+            const prevEpisodeBtn = document.getElementById('prev-episode-btn');
+            const nextEpisodeBtn = document.getElementById('next-episode-btn');
+            const backToComicDetailBtn = document.getElementById('back-to-comic-detail');
+
+
+            function loadEpisode(index) {
+                if (!currentComic || index < 0 || index >= currentComic.episodes.length) {
+                    episodeTitleElem.textContent = "Episode Not Found";
+                    episodeContentElem.innerHTML = "<p style='text-align:center; padding: 20px;'>Oops! This episode couldn't be loaded.</p>";
+                    prevEpisodeBtn.disabled = true;
+                    nextEpisodeBtn.disabled = true;
+                    return;
+                }
+
+                const episode = currentComic.episodes[index];
+                episodeId = episode.id; 
+                episodeTitleElem.textContent = `${currentComic.title} - ${episode.title}`;
+                episodeContentElem.innerHTML = ''; 
+
+                episode.imageUrls.forEach(imgUrl => {
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    img.alt = `Comic Panel for ${episode.title}`;
+                    episodeContentElem.appendChild(img);
+                });
+
+                
+                episodeContentElem.scrollTop = 0;
+
+               
+                prevEpisodeBtn.disabled = (index === 0);
+                nextEpisodeBtn.disabled = (index === currentComic.episodes.length - 1);
+
+               
+                backToComicDetailBtn.href = `index.html?view=detail&comicId=${comicId}`;
+            }
+
+            prevEpisodeBtn.addEventListener('click', () => {
+                if (currentEpisodeIndex > 0) {
+                    currentEpisodeIndex--;
+                    loadEpisode(currentEpisodeIndex);
+                    
+                    history.pushState(null, '', `episode-reader.html?comicId=${comicId}&episodeId=${currentComic.episodes[currentEpisodeIndex].id}`);
+                }
+            });
+
+            nextEpisodeBtn.addEventListener('click', () => {
+                if (currentEpisodeIndex < currentComic.episodes.length - 1) {
+                    currentEpisodeIndex++;
+                    loadEpisode(currentEpisodeIndex);
+                   
+                    history.pushState(null, '', `episode-reader.html?comicId=${comicId}&episodeId=${currentComic.episodes[currentEpisodeIndex].id}`);
+                }
+            });
+
+           
+            if (currentComic && currentEpisodeIndex !== -1) {
+                loadEpisode(currentEpisodeIndex);
+            } else {
+                episodeTitleElem.textContent = "Comic or Episode Not Found";
+                episodeContentElem.innerHTML = "<p style='text-align:center; padding: 20px;'>Please go back to the homepage to select a comic.</p>";
+                prevEpisodeBtn.disabled = true;
+                nextEpisodeBtn.disabled = true;
+            }
+
+           
+            backToComicDetailBtn.addEventListener('click', (e) => {
+               
+                e.preventDefault();
+                window.location.href = `index.html?view=detail&comicId=${comicId}`;
+            });
+        });
+    </script>
+</body>
+</html>
